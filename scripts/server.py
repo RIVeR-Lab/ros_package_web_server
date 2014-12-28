@@ -16,6 +16,11 @@ class MainHandler(tornado.web.RequestHandler):
             self.write("<li><a href='/"+package+"/'>"+package+"</a></li>")
         self.write("</l>")
 
+class CrossOriginStaticFileHandler(tornado.web.StaticFileHandler):
+    def get(self, config):
+        self.set_header("Access-Control-Allow-Origin", "*")
+        return super(CrossOriginStaticFileHandler, self).get(config)
+
 def main():
     rospy.init_node('ros_package_web_server', anonymous=True)
     port = default_param = rospy.get_param('~port', 8888)
@@ -24,7 +29,7 @@ def main():
         ("/", MainHandler),
     ]
     for package in packages:
-        handlers.append((r'/'+package+'/(.*)', tornado.web.StaticFileHandler, {'path': rospack.get_path(package)}))
+        handlers.append((r'/'+package+'/(.*)', CrossOriginStaticFileHandler, {'path': rospack.get_path(package)}))
 
 
     def log_request(handler):
