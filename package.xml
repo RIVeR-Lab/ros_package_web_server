@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <name>ros_package_web_server</name>
-  <version>0.0.0</version>
+  <version>0.0.1</version>
   <description>Web server to host ROS package content</description>
 
   <maintainer email="mwills@wpi.edu">Mitchell Wills</maintainer>
